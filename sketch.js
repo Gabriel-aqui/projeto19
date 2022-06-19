@@ -5,13 +5,14 @@ var ship, shipImg;
 var invisibleBlockGroup, invisibleBlock;
 var gameState = "play"
 var leftThing, rightThing
-
+var endGame, endGameImg
 function preload() {
   universeImg = loadImage("universe.png");
   holeImg = loadImage("hole.png");
   stoneImg = loadImage("stone.png");
   shipImg = loadImage("ship-standing.png");
   spookySound = loadSound("spooky.wav");
+  endGameImg = loadImage("game_over.png")
 }
 
 function setup() {
@@ -19,7 +20,7 @@ function setup() {
   universe = createSprite(300, 300);
   universe.addImage("universe.png", universeImg);
   universe.velocityY = 1;
-  ship = createSprite(300, 500)
+  ship = createSprite(300, -100)
   ship.addImage("ship-standing.png", shipImg)
   ship.scale = 0.5
   leftThing = createSprite(30, 300, 60, 600)
@@ -48,8 +49,8 @@ function draw() {
   //spaggetificando a nave
   if (ship.isTouching(stoneGroup) || ship.y > 600) {
     ship.destroy()
-    textAlign(CENTER)
-    text("Fantasma Morreu", 300, 300)
+    endGame = createSprite(250, 200);
+    endGame.addImage("game_over.png", endGameImg);
   }
   ship.scale = 0.07
   drawSprites()
@@ -58,17 +59,17 @@ function draw() {
 function holeSpawn() {
   if (frameCount % 340 === 0) {
     hole = createSprite(300, -60)
-    stone = createSprite(300, -20)
+  //  stone = createSprite(300, -20)
     hole.addImage(holeImg)
-    stone.addImage(stoneImg)
-    stone.velocityY = 1.7
+  //  stone.addImage(stoneImg)
+//    stone.velocityY = 1.7
     hole.velocityY = 1.7
     hole.x = Math.round(random(100, 500))
-    stone.x = hole.x
+  //  stone.x = hole.x
     hole.lifetime = 1000
-    stone.lifetime = 1000
-    stoneGroup.add(stone)
-    stone.scale = 0.09
+  //  stone.lifetime = 1000
+    stoneGroup.add(hole)
+  //  stone.scale = 0.09
     hole.scale = 0.1
   }
 }
